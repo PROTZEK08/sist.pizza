@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Ocupar Mesa</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color:#f4f4f4; padding:20px; }
+        form { background:white; padding:20px; border-radius:10px; max-width:600px; margin:auto; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+        label { font-weight:bold; display:block; margin-top:10px; }
+        input { width:100%; padding:10px; margin-top:5px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box; }
+        button { background:#fd7e14; color:white; border:none; padding:12px; width:100%; border-radius:5px; cursor:pointer; font-size:16px; }
+        button:hover { background:#e06a00; }
+        .voltar { display:block; text-align:center; margin-top:15px; color:#007bff; text-decoration:none; }
+    </style>
+</head>
+<body>
+    <form method="POST">
+        <h2>Ocupar Mesa {{ mesa.numero }}</h2>
+        <p><strong>Capacidade:</strong> {{ mesa.capacidade }} pessoas</p>
+
+        <label>Nome do Cliente</label>
+        <input type="text" name="cliente_atual" required placeholder="Nome do cliente">
+
+        <button type="submit">Confirmar Ocupação</button>
+    </form>
+    <a href="/mesas" class="voltar">← Voltar para lista de mesas</a>
+</body>
+</html>

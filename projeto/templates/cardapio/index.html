@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Digital</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color:#f4f4f4; margin:20px; }
+        h1 { text-align:center; }
+        .topo { display:flex; gap:10px; margin-bottom:10px; }
+        .botao { display:inline-block; padding:10px 15px; background:#28a745; color:white; text-decoration:none; border-radius:5px; }
+        .botao:hover { background:#218838; }
+        .botao-azul { display:inline-block; padding:10px 15px; background:#007bff; color:white; text-decoration:none; border-radius:5px; }
+        .botao-azul:hover { background:#0056b3; }
+        .botao-vermelho { display:inline-block; padding:6px 12px; background:#dc3545; color:white; text-decoration:none; border-radius:5px; font-size:13px; }
+        .card { background:white; padding:15px; margin:15px 0; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+        .topo { flex-wrap:wrap; }
+    </style>
+</head>
+<body>
+
+    <h1>Cardápio Digital</h1>
+
+    <div class="topo">
+        <a href="/cadastrar" class="botao">+ Cadastrar Novo Prato</a>
+        <a href="/pedidos/cadastrar" class="botao-azul">🧾 Realizar Pedido</a>
+        <a href="/pedidos" class="botao-azul" style="background:#6c757d;">📋 Ver Pedidos</a>
+        <a href="/mesas" class="botao-azul" style="background:#fd7e14;">🪑 Mesas</a>
+        <a href="/clientes" class="botao-azul" style="background:#6f42c1;">👤 Clientes</a>
+        <a href="/dashboard" class="botao-azul" style="background:#20c997;">📊 Dashboard</a>
+    </div>
+
+    <hr>
+
+    {% if pratos %}
+        {% for prato in pratos %}
+        <div class="card">
+            <a href="/excluir/{{ prato.id }}" class="botao-vermelho" style="float:right;"
+               onclick="return confirm('Excluir {{ prato.nome }}?')">Excluir</a>
+            <h2>{{ prato.nome }}</h2>
+            <p><strong>ID:</strong> {{ prato.id }}</p>
+            <p><strong>Descrição:</strong> {{ prato.descricao }}</p>
+            <p><strong>Preço:</strong> R$ {{ prato.preco }}</p>
+            <p><strong>Categoria:</strong> {{ prato.categoria }}</p>
+            <p><strong>Ingredientes:</strong> {{ prato.ingredientes|join(', ') }}</p>
+            <p><strong>Tempo de Preparo:</strong> {{ prato.tempo_preparo }} minutos</p>
+            <p><strong>Disponível:</strong> {{ prato.disponivel }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <h3>Nenhum prato cadastrado.</h3>
+    {% endif %}
+
+</body>
+</html>

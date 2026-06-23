@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color:#f4f4f4; margin:20px; }
+        h1 { text-align:center; }
+        .topo { display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap; align-items:center; }
+        .botao { display:inline-block; padding:10px 15px; background:#28a745; color:white; text-decoration:none; border-radius:5px; }
+        .botao:hover { background:#218838; }
+        .botao-azul { display:inline-block; padding:10px 15px; background:#007bff; color:white; text-decoration:none; border-radius:5px; }
+        .botao-azul:hover { background:#0056b3; }
+        .botao-vermelho { display:inline-block; padding:6px 12px; background:#dc3545; color:white; text-decoration:none; border-radius:5px; font-size:13px; }
+        .botao-vermelho:hover { background:#b02a37; }
+        .card { background:white; padding:15px; margin:15px 0; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+        .acoes { display:flex; gap:8px; float:right; }
+        select.filtro { padding:8px; border-radius:5px; border:1px solid #ccc; }
+        .status-pendente { color:#fd7e14; font-weight:bold; }
+        .status-em-preparação, .status-em-preparacao { color:#007bff; font-weight:bold; }
+        .status-pronto { color:#28a745; font-weight:bold; }
+        .status-entregue { color:#6c757d; font-weight:bold; }
+        ul.itens { margin:5px 0 0 0; padding-left:20px; }
+        .total { font-size:16px; font-weight:bold; color:#28a745; }
+    </style>
+</head>
+<body>
+
+    <h1>Pedidos</h1>
+
+    <div class="topo">
+        <a href="/pedidos/cadastrar" class="botao">🧾 Novo Pedido</a>
+        <a href="/" class="botao-azul" style="background:#6c757d;">🍽️ Cardápio</a>
+        <a href="/mesas" class="botao-azul" style="background:#fd7e14;">🪑 Mesas</a>
+        <a href="/clientes" class="botao-azul" style="background:#6f42c1;">👤 Clientes</a>
+        <a href="/dashboard" class="botao-azul" style="background:#20c997;">📊 Dashboard</a>
+
+        <form method="GET" style="margin-left:auto;">
+            <select name="status" class="filtro" onchange="this.form.submit()">
+                <option value="" {% if not status_filtro %}selected{% endif %}>Todos os status</option>
+                {% for s in ['Pendente', 'Em Preparação', 'Pronto', 'Entregue'] %}
+                <option value="{{ s }}" {% if status_filtro == s %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+
+    <hr>
+
+    {% if pedidos %}
+        {% for pedido in pedidos %}
+        <div class="card">
+            <div class="acoes">
+                <a href="/pedidos/editar/{{ pedido.id }}" class="botao-azul" style="padding:6px 12px; font-size:13px;">Editar</a>
+                <a href="/pedidos/excluir/{{ pedido.id }}" class="botao-vermelho"
+                   onclick="return confirm('Excluir pedido #{{ pedido.numero_pedido }}?')">Excluir</a>
+            </div>
+            <h2>Pedido #{{ pedido.numero_pedido }}</h2>
+            <p><strong>ID:</strong> {{ pedido.id }}</p>
+            <p><strong>Data/Hora:</strong> {{ pedido.data_hora }}</p>
+            <p><strong>Mesa:</strong> {{ pedido.mesa }}</p>
+            <p><strong>Cliente:</strong> {{ pedido.cliente }}</p>
+            <p><strong>Garçom:</strong> {{ pedido.garcom }}</p>
+            <p><strong>Status:</strong>
+                <span class="status-{{ pedido.status | lower | replace(' ', '-') }}">{{ pedido.status }}</span>
+            </p>
+            {% if pedido.observacoes %}
+            <p><strong>Observações:</strong> {{ pedido.observacoes }}</p>
+            {% endif %}
+            <p><strong>Itens:</strong></p>
+            <ul class="itens">
+                {% for item in pedido.itens %}
+                <li>{{ item.quantidade }}x {{ item.prato }} — R$ {{ "%.2f"|format(item.preco_unitario) }} cada</li>
+                {% endfor %}
+            </ul>
+            <p class="total">Total: R$ {{ "%.2f"|format(pedido.total) }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <h3>Nenhum pedido encontrado.</h3>
+    {% endif %}
+
+</body>
+</html>

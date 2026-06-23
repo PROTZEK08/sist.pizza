@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Mesa</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color:#f4f4f4; padding:20px; }
+        form { background:white; padding:20px; border-radius:10px; max-width:600px; margin:auto; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+        label { font-weight:bold; display:block; margin-top:10px; }
+        input { width:100%; padding:10px; margin-top:5px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box; }
+        button { background:#28a745; color:white; border:none; padding:12px; width:100%; border-radius:5px; cursor:pointer; font-size:16px; }
+        button:hover { background:#218838; }
+        .erro { color:red; margin-bottom:10px; }
+        .voltar { display:block; text-align:center; margin-top:15px; color:#007bff; text-decoration:none; }
+    </style>
+</head>
+<body>
+    <form method="POST">
+        <h2>Cadastrar Nova Mesa</h2>
+        {% if erro %}<p class="erro">{{ erro }}</p>{% endif %}
+
+        <label>ID da Mesa</label>
+        <input type="text" name="id" required placeholder="Ex: MESA01">
+
+        <label>Número da Mesa</label>
+        <input type="number" name="numero" required placeholder="Ex: 1">
+
+        <label>Capacidade (pessoas)</label>
+        <input type="number" name="capacidade" required placeholder="Ex: 4">
+
+        <button type="submit">Cadastrar Mesa</button>
+    </form>
+    <a href="/mesas" class="voltar">← Voltar para lista de mesas</a>
+</body>
+</html>

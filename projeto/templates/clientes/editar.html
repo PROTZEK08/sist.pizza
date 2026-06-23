@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Cliente</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color:#f4f4f4; padding:20px; }
+        form { background:white; padding:20px; border-radius:10px; max-width:600px; margin:auto; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+        label { font-weight:bold; display:block; margin-top:10px; }
+        input, textarea { width:100%; padding:10px; margin-top:5px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px; box-sizing:border-box; }
+        button { background:#007bff; color:white; border:none; padding:12px; width:100%; border-radius:5px; cursor:pointer; font-size:16px; }
+        button:hover { background:#0056b3; }
+        .voltar { display:block; text-align:center; margin-top:15px; color:#007bff; text-decoration:none; }
+    </style>
+</head>
+<body>
+    <form method="POST">
+        <h2>Editar Cliente</h2>
+
+        <label>Nome Completo</label>
+        <input type="text" name="nome" value="{{ cliente.nome }}" required>
+
+        <label>Telefone</label>
+        <input type="text" name="telefone" value="{{ cliente.telefone }}" required>
+
+        <label>Email</label>
+        <input type="email" name="email" value="{{ cliente.email }}" required>
+
+        <label>CPF (opcional)</label>
+        <input type="text" name="cpf" value="{{ cliente.cpf }}">
+
+        <label>Preferências</label>
+        <textarea name="preferencias" rows="3">{{ cliente.preferencias }}</textarea>
+
+        <button type="submit">Salvar Alterações</button>
+    </form>
+    <a href="/clientes" class="voltar">← Voltar para lista de clientes</a>
+</body>
+</html>

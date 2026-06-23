@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesas</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color:#f4f4f4; margin:20px; }
+        h1 { text-align:center; }
+        .topo { display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+        .botao { display:inline-block; padding:10px 15px; background:#28a745; color:white; text-decoration:none; border-radius:5px; }
+        .botao:hover { background:#218838; }
+        .botao-azul { display:inline-block; padding:10px 15px; background:#007bff; color:white; text-decoration:none; border-radius:5px; }
+        .botao-azul:hover { background:#0056b3; }
+        .botao-vermelho { display:inline-block; padding:6px 12px; background:#dc3545; color:white; text-decoration:none; border-radius:5px; font-size:13px; }
+        .botao-laranja { display:inline-block; padding:6px 12px; background:#fd7e14; color:white; text-decoration:none; border-radius:5px; font-size:13px; }
+        .botao-verde { display:inline-block; padding:6px 12px; background:#28a745; color:white; text-decoration:none; border-radius:5px; font-size:13px; }
+        .card { background:white; padding:15px; margin:15px 0; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+        .acoes { display:flex; gap:8px; float:right; }
+        .status-livre { color:green; font-weight:bold; }
+        .status-ocupada { color:red; font-weight:bold; }
+        .status-reservada { color:orange; font-weight:bold; }
+    </style>
+</head>
+<body>
+    <h1>Mesas</h1>
+    <div class="topo">
+        <a href="/mesas/cadastrar" class="botao">+ Cadastrar Nova Mesa</a>
+        <a href="/" class="botao-azul" style="background:#6c757d;">🍽️ Cardápio</a>
+        <a href="/pedidos" class="botao-azul" style="background:#6c757d;">📋 Pedidos</a>
+        <a href="/clientes" class="botao-azul" style="background:#6f42c1;">👤 Clientes</a>
+        <a href="/dashboard" class="botao-azul" style="background:#20c997;">📊 Dashboard</a>
+    </div>
+    <hr>
+    {% if mesas %}
+        {% for m in mesas %}
+        <div class="card">
+            <div class="acoes">
+                <a href="/mesas/editar/{{ m.id }}" class="botao-azul" style="padding:6px 12px; font-size:13px;">Editar</a>
+                {% if m.status != "Ocupada" %}
+                <a href="/mesas/ocupar/{{ m.id }}" class="botao-laranja">Ocupar</a>
+                {% else %}
+                <a href="/mesas/liberar/{{ m.id }}" class="botao-verde">Liberar</a>
+                {% endif %}
+                <a href="/mesas/excluir/{{ m.id }}" class="botao-vermelho"
+                   onclick="return confirm('Excluir mesa {{ m.numero }}?')">Excluir</a>
+            </div>
+            <h2>Mesa {{ m.numero }}</h2>
+            <p><strong>ID:</strong> {{ m.id }}</p>
+            <p><strong>Capacidade:</strong> {{ m.capacidade }} pessoas</p>
+            <p><strong>Status:</strong>
+                <span class="status-{{ m.status | lower }}">{{ m.status }}</span>
+            </p>
+            <p><strong>Cliente Atual:</strong> {{ m.cliente_atual or '-' }}</p>
+            <p><strong>Hora de Ocupação:</strong> {{ m.hora_ocupacao or '-' }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <h3>Nenhuma mesa cadastrada.</h3>
+    {% endif %}
+</body>
+</html>

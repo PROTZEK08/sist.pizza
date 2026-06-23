@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Pizzaria</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color:#f4f4f4; margin:20px; }
+        h1 { text-align:center; }
+        .topo { display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+        .botao { display:inline-block; padding:10px 15px; background:#28a745; color:white; text-decoration:none; border-radius:5px; }
+        .botao:hover { background:#218838; }
+        .botao-azul { display:inline-block; padding:10px 15px; background:#007bff; color:white; text-decoration:none; border-radius:5px; }
+        .botao-azul:hover { background:#0056b3; }
+
+        .cards-resumo { display:flex; gap:15px; flex-wrap:wrap; margin:20px 0; }
+        .resumo {
+            flex:1; min-width:180px; background:white; border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,0.1); padding:18px; text-align:center;
+        }
+        .resumo .valor { font-size:24px; font-weight:bold; color:#28a745; margin-top:5px; }
+        .resumo .label { font-size:13px; color:#6c757d; text-transform:uppercase; }
+
+        .sem-dados { text-align:center; color:#888; padding:40px; }
+    </style>
+</head>
+<body>
+
+    <h1>📊 Dashboard da Pizzaria</h1>
+
+    <div class="topo">
+        <a href="/" class="botao-azul" style="background:#6c757d;">🍽️ Cardápio</a>
+        <a href="/pedidos" class="botao-azul" style="background:#007bff;">📋 Pedidos</a>
+        <a href="/mesas" class="botao-azul" style="background:#fd7e14;">🪑 Mesas</a>
+        <a href="/clientes" class="botao-azul" style="background:#6f42c1;">👤 Clientes</a>
+    </div>
+
+    <hr>
+
+    {% if total_pedidos == 0 %}
+        <div class="sem-dados">
+            <h2>Nenhum pedido cadastrado ainda.</h2>
+            <p>Cadastre pedidos para ver as estatísticas aparecerem aqui.</p>
+        </div>
+    {% else %}
+
+    <div class="cards-resumo">
+        <div class="resumo">
+            <div class="label">Faturamento Total</div>
+            <div class="valor">R$ {{ "%.2f"|format(faturamento_total) }}</div>
+        </div>
+        <div class="resumo">
+            <div class="label">Pedidos Realizados</div>
+            <div class="valor">{{ total_pedidos }}</div>
+        </div>
+        <div class="resumo">
+            <div class="label">Itens Vendidos</div>
+            <div class="valor">{{ total_itens_vendidos }}</div>
+        </div>
+        <div class="resumo">
+            <div class="label">Ticket Médio</div>
+            <div class="valor">R$ {{ "%.2f"|format(ticket_medio) }}</div>
+        </div>
+        <div class="resumo">
+            <div class="label">Mais Vendido</div>
+            <div class="valor" style="font-size:16px;">{{ prato_mais_vendido }}</div>
+        </div>
+        <div class="resumo">
+            <div class="label">Maior Faturamento</div>
+            <div class="valor" style="font-size:16px;">{{ prato_mais_lucrativo }}</div>
+        </div>
+    </div>
+
+    {% endif %}
+
+</body>
+</html>

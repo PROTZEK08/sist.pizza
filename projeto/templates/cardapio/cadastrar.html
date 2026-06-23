@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Prato</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color:#f4f4f4;
+            padding:20px;
+        }
+
+        form{
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            max-width:600px;
+            margin:auto;
+            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        }
+
+        input, textarea, select{
+            width:100%;
+            padding:10px;
+            margin-top:5px;
+            margin-bottom:15px;
+            border:1px solid #ccc;
+            border-radius:5px;
+        }
+
+        button{
+            background:#28a745;
+            color:white;
+            border:none;
+            padding:12px;
+            width:100%;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#218838;
+        }
+    </style>
+</head>
+<body>
+
+    <form method="POST">
+
+        <h2>Cadastrar Novo Prato</h2>
+
+        <label>ID do Prato</label>
+        <input type="text" name="id" required>
+
+        <label>Nome do Prato</label>
+        <input type="text" name="nome" required>
+
+        <label>Descrição</label>
+        <textarea name="descricao"></textarea>
+
+        <label>Preço (R$)</label>
+        <input type="number" step="0.01" name="preco" required>
+
+        <label>Categoria</label>
+        <select name="categoria">
+            <option>Entrada</option>
+            <option>Prato Principal</option>
+            <option>Sobremesa</option>
+            <option>Bebida</option>
+        </select>
+
+        <label>Ingredientes (separados por vírgula)</label>
+        <input type="text"
+               name="ingredientes"
+               placeholder="Arroz, Feijão, Carne">
+
+        <label>Tempo de Preparo (minutos)</label>
+        <input type="number"
+               name="tempo_preparo"
+               required>
+
+        <label>Disponível</label>
+        <select name="disponivel">
+            <option>Sim</option>
+            <option>Não</option>
+        </select>
+
+        <label>Foto (opcional)</label>
+        <input type="text"
+               name="foto"
+               placeholder="caminho_da_imagem.jpg">
+
+        <button type="submit">
+            Cadastrar Prato
+        </button>
+
+    </form>
+
+</body>
+</html>

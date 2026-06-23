@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color:#f4f4f4; margin:20px; }
+        h1 { text-align:center; }
+        .topo { display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+        .botao { display:inline-block; padding:10px 15px; background:#28a745; color:white; text-decoration:none; border-radius:5px; }
+        .botao:hover { background:#218838; }
+        .botao-azul { display:inline-block; padding:10px 15px; background:#007bff; color:white; text-decoration:none; border-radius:5px; }
+        .botao-azul:hover { background:#0056b3; }
+        .botao-vermelho { display:inline-block; padding:6px 12px; background:#dc3545; color:white; text-decoration:none; border-radius:5px; font-size:13px; }
+        .card { background:white; padding:15px; margin:15px 0; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <h1>Clientes</h1>
+    <div class="topo">
+        <a href="/clientes/cadastrar" class="botao">+ Cadastrar Novo Cliente</a>
+        <a href="/" class="botao-azul" style="background:#6c757d;">🍽️ Cardápio</a>
+        <a href="/pedidos" class="botao-azul" style="background:#6c757d;">📋 Pedidos</a>
+        <a href="/mesas" class="botao-azul" style="background:#fd7e14;">🪑 Mesas</a>
+    </div>
+    <hr>
+    {% if clientes %}
+        {% for c in clientes %}
+        <div class="card">
+            <a href="/clientes/excluir/{{ c.id }}" class="botao-vermelho" style="float:right;"
+               onclick="return confirm('Excluir {{ c.nome }}?')">Excluir</a>
+            <a href="/clientes/editar/{{ c.id }}" class="botao-azul" style="float:right; margin-right:5px; padding:6px 12px; font-size:13px;">Editar</a>
+            <h2>{{ c.nome }}</h2>
+            <p><strong>ID:</strong> {{ c.id }}</p>
+            <p><strong>Telefone:</strong> {{ c.telefone }}</p>
+            <p><strong>Email:</strong> {{ c.email }}</p>
+            <p><strong>CPF:</strong> {{ c.cpf or '-' }}</p>
+            <p><strong>Preferências:</strong> {{ c.preferencias or '-' }}</p>
+            <p><strong>Visitas:</strong> {{ c.historico | length }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <h3>Nenhum cliente cadastrado.</h3>
+    {% endif %}
+</body>
+</html>
